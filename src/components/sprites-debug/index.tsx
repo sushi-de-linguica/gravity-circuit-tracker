@@ -10,6 +10,18 @@ const SpritesDebug = ({
   onClick,
   showCardId = true,
 }) => {
+  const getTitleById = (id: any) => {
+    if (!information || id == null || id == undefined) {
+      return "";
+    }
+
+    const object = information.find((info) => info.id == id);
+    if (!object) {
+      return "";
+    }
+
+    return object.locationText;
+  };
   return (
     <>
       {Object.entries(textureObject).map(([id, data]: any) => (
@@ -17,7 +29,7 @@ const SpritesDebug = ({
           texture={data}
           source={source}
           key={uuidv4()}
-          title={information[id] && information[id].locationText}
+          title={getTitleById(id)}
           id={id}
           style={{
             transform:
