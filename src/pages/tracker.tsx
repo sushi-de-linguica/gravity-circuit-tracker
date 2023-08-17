@@ -39,6 +39,12 @@ const TrackerPage = () => {
     });
   });
 
+  const handleScrollToTop = () => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    });
+  };
+
   return (
     <div
       style={{
@@ -56,7 +62,10 @@ const TrackerPage = () => {
           textureObject={textures.enemies}
           information={elements.enemies}
           source={BestiaryImage}
-          onClick={(id) => toggleValueInsideLocalStorage(ETabs.ENEMIES, id)}
+          onClick={(id) => {
+            toggleValueInsideLocalStorage(ETabs.ENEMIES, id);
+            handleScrollToTop();
+          }}
         />
       )}
 
@@ -66,7 +75,10 @@ const TrackerPage = () => {
           textureObject={textures.bosses}
           information={elements.bosses}
           source={BestiaryImage}
-          onClick={(id) => toggleValueInsideLocalStorage(ETabs.BOSSES, id)}
+          onClick={(id) => {
+            toggleValueInsideLocalStorage(ETabs.BOSSES, id);
+            handleScrollToTop();
+          }}
         />
       )}
 
@@ -76,7 +88,10 @@ const TrackerPage = () => {
           textureObject={textures.characters}
           information={elements.characters}
           source={BestiaryImage}
-          onClick={(id) => toggleValueInsideLocalStorage(ETabs.CHARACTERS, id)}
+          onClick={(id) => {
+            toggleValueInsideLocalStorage(ETabs.CHARACTERS, id);
+            handleScrollToTop();
+          }}
         />
       )}
 
@@ -98,9 +113,27 @@ const TrackerPage = () => {
       )}
 
       <Footer
-        bossesClick={() => setShowTab(ETabs.BOSSES)}
-        charactersClick={() => setShowTab(ETabs.CHARACTERS)}
-        enemiesClick={() => setShowTab(ETabs.ENEMIES)}
+        bossesClick={() => {
+          if (showTab === ETabs.BOSSES) {
+            handleScrollToTop();
+            return;
+          }
+          setShowTab(ETabs.BOSSES);
+        }}
+        charactersClick={() => {
+          if (showTab === ETabs.CHARACTERS) {
+            handleScrollToTop();
+            return;
+          }
+          setShowTab(ETabs.CHARACTERS);
+        }}
+        enemiesClick={() => {
+          if (showTab === ETabs.ENEMIES) {
+            handleScrollToTop();
+            return;
+          }
+          setShowTab(ETabs.ENEMIES);
+        }}
         active={showTab}
       />
     </div>
