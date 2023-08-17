@@ -13,11 +13,8 @@ const TrackerPage = () => {
         justifyContent: "center",
       }}
     >
-      {/* <SpriteRenderAll
-        textureObject={TextureAtlas.bestiary}
-        source={BestiaryImage}
-      /> */}
-      <SpritesDebug textureObject={textures.bestiary} source={BestiaryImage} />
+      {/* <SpritesDebug textureObject={textures.bestiary} source={BestiaryImage} /> */}
+      <SpritesDebug textureObject={textures.bosses} source={BestiaryImage} />
     </div>
   );
 };
