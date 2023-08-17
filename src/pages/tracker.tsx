@@ -40,9 +40,7 @@ const TrackerPage = () => {
   });
 
   const handleScrollToTop = () => {
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    });
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -76,7 +74,6 @@ const TrackerPage = () => {
             source={BestiaryImage}
             onClick={(id) => {
               toggleValueInsideLocalStorage(ETabs.ENEMIES, id);
-              handleScrollToTop();
             }}
           />
         )}
@@ -89,7 +86,6 @@ const TrackerPage = () => {
             source={BestiaryImage}
             onClick={(id) => {
               toggleValueInsideLocalStorage(ETabs.BOSSES, id);
-              handleScrollToTop();
             }}
           />
         )}
@@ -102,7 +98,6 @@ const TrackerPage = () => {
             source={BestiaryImage}
             onClick={(id) => {
               toggleValueInsideLocalStorage(ETabs.CHARACTERS, id);
-              handleScrollToTop();
             }}
           />
         )}
