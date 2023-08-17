@@ -1,5 +1,5 @@
 export const elements = {
-  bestiary: [
+  enemies: [
     {
       id: 1,
       title: "Virus Soldier",
@@ -1114,18 +1114,6 @@ export const textures = {
       originalWidth: 1,
       originalHeight: -31,
     },
-    "44": {
-      x: 279,
-      y: 902,
-      width: 72,
-      height: 58,
-      textureWidth: 1024,
-      textureHeight: 2048,
-      offsetX: 0,
-      offsetY: 1,
-      originalWidth: 1,
-      originalHeight: -0,
-    },
     "23": {
       x: 801,
       y: 87,
@@ -1197,6 +1185,7 @@ export const textures = {
       offsetY: 1,
       originalWidth: 1,
       originalHeight: -68,
+      scale: 2,
     },
     "43": {
       x: 132,
@@ -1209,6 +1198,20 @@ export const textures = {
       offsetY: 1,
       originalWidth: 1,
       originalHeight: -13,
+      scale: 2,
+    },
+    "44": {
+      x: 279,
+      y: 902,
+      width: 72,
+      height: 58,
+      textureWidth: 1024,
+      textureHeight: 2048,
+      offsetX: 0,
+      offsetY: 1,
+      originalWidth: 1,
+      originalHeight: -0,
+      scale: 2,
     },
   },
   bosses: {
@@ -1259,6 +1262,7 @@ export const textures = {
       offsetY: 1,
       originalWidth: 1,
       originalHeight: -2,
+      scale: 2,
     },
     "7": {
       x: 2,
@@ -1283,6 +1287,7 @@ export const textures = {
       offsetY: 1,
       originalWidth: 1,
       originalHeight: -32,
+      scale: 2,
     },
     "2": {
       x: 135,
@@ -1367,6 +1372,7 @@ export const textures = {
       offsetY: 1,
       originalWidth: 1,
       originalHeight: -0,
+      scale: 2,
     },
   },
   characters: {
@@ -1441,6 +1447,7 @@ export const textures = {
       offsetY: 1,
       originalWidth: 1,
       originalHeight: -7,
+      scale: 2,
     },
     "1": {
       x: 403,

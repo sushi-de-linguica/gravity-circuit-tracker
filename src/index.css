@@ -11,4 +11,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --column-size: 100px;
+  --grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  --grid-template-rows: repeat(99, 125px);
+  --card-margin-bottom: 15px;
+  --scale-size: 2;
 }
