@@ -1,0 +1,7 @@
+:root {
+  --column-size: 100px;
+  --grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  --grid-template-rows: repeat(25, 125px);
+  --card-margin-bottom: 15px;
+  --scale-size: 1;
+}
