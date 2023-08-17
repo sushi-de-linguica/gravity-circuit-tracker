@@ -34,7 +34,7 @@ const SpritesDebug = ({
   }, []);
   return (
     <>
-      {Object.entries(textureObject).map(([id, data], index) => (
+      {Object.entries(textureObject).map(([id, data]: any) => (
         <Sprite
           texture={data}
           source={source}

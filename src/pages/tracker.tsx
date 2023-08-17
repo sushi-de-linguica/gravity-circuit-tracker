@@ -4,7 +4,7 @@ import { elements, textures } from "../options";
 import { Footer } from "../components/footer";
 import { useEffect, useState } from "react";
 import { toggleValueInsideLocalStorage } from "../helpers/local-storage";
-import { Alert } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 
 enum ETabs {
   BOSSES = "BOSSES",
@@ -20,7 +20,7 @@ const TrackerPage = () => {
     document.addEventListener("contextmenu", (event) => {
       event.preventDefault();
       if (event.target) {
-        const tip = event.target.getAttribute("title");
+        const tip = (event.target as any).getAttribute("title");
         if (tip) {
           window.dispatchEvent(
             new CustomEvent("SHOW_TIP", {
@@ -35,7 +35,7 @@ const TrackerPage = () => {
 
     window.addEventListener("SHOW_TIP", (event) => {
       console.log("eventTip", event);
-      setTip(event.detail.tip);
+      setTip((event as any).detail.tip);
     });
   });
 
@@ -46,97 +46,110 @@ const TrackerPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "var(--grid-template-columns)",
-        gridTemplateRows: "var(--grid-template-rows)",
-        gridAutoFlow: "dense",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {showTab === ETabs.ENEMIES && (
-        <SpritesDebug
-          objectName={ETabs.ENEMIES}
-          textureObject={textures.enemies}
-          information={elements.enemies}
-          source={BestiaryImage}
-          onClick={(id) => {
-            toggleValueInsideLocalStorage(ETabs.ENEMIES, id);
-            handleScrollToTop();
-          }}
-        />
-      )}
-
-      {showTab === ETabs.BOSSES && (
-        <SpritesDebug
-          objectName={ETabs.BOSSES}
-          textureObject={textures.bosses}
-          information={elements.bosses}
-          source={BestiaryImage}
-          onClick={(id) => {
-            toggleValueInsideLocalStorage(ETabs.BOSSES, id);
-            handleScrollToTop();
-          }}
-        />
-      )}
-
-      {showTab === ETabs.CHARACTERS && (
-        <SpritesDebug
-          objectName={ETabs.CHARACTERS}
-          textureObject={textures.characters}
-          information={elements.characters}
-          source={BestiaryImage}
-          onClick={(id) => {
-            toggleValueInsideLocalStorage(ETabs.CHARACTERS, id);
-            handleScrollToTop();
-          }}
-        />
-      )}
-
-      {tip && (
-        <Alert
-          variant="filled"
-          severity="info"
-          style={{
-            position: "fixed",
-            bottom: "65px",
-            left: "0",
-            right: "0",
-            cursor: "pointer",
-          }}
-          onClick={() => setTip(null)}
-        >
-          {tip}
-        </Alert>
-      )}
-
-      <Footer
-        bossesClick={() => {
-          if (showTab === ETabs.BOSSES) {
-            handleScrollToTop();
-            return;
-          }
-          setShowTab(ETabs.BOSSES);
+    <>
+      <Button
+        color="error"
+        onClick={() => {
+          localStorage.setItem(ETabs.ENEMIES, "[]");
+          localStorage.setItem(ETabs.CHARACTERS, "[]");
+          localStorage.setItem(ETabs.BOSSES, "[]");
+          window.dispatchEvent(new CustomEvent("UPDATE_LOCAL_STORAGE"));
         }}
-        charactersClick={() => {
-          if (showTab === ETabs.CHARACTERS) {
-            handleScrollToTop();
-            return;
-          }
-          setShowTab(ETabs.CHARACTERS);
+      >
+        Reset
+      </Button>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "var(--grid-template-columns)",
+          gridTemplateRows: "var(--grid-template-rows)",
+          gridAutoFlow: "dense",
+          justifyContent: "center",
+          alignItems: "center",
         }}
-        enemiesClick={() => {
-          if (showTab === ETabs.ENEMIES) {
-            handleScrollToTop();
-            return;
-          }
-          setShowTab(ETabs.ENEMIES);
-        }}
-        active={showTab}
-      />
-    </div>
+      >
+        {showTab === ETabs.ENEMIES && (
+          <SpritesDebug
+            objectName={ETabs.ENEMIES}
+            textureObject={textures.enemies}
+            information={elements.enemies}
+            source={BestiaryImage}
+            onClick={(id) => {
+              toggleValueInsideLocalStorage(ETabs.ENEMIES, id);
+              handleScrollToTop();
+            }}
+          />
+        )}
+
+        {showTab === ETabs.BOSSES && (
+          <SpritesDebug
+            objectName={ETabs.BOSSES}
+            textureObject={textures.bosses}
+            information={elements.bosses}
+            source={BestiaryImage}
+            onClick={(id) => {
+              toggleValueInsideLocalStorage(ETabs.BOSSES, id);
+              handleScrollToTop();
+            }}
+          />
+        )}
+
+        {showTab === ETabs.CHARACTERS && (
+          <SpritesDebug
+            objectName={ETabs.CHARACTERS}
+            textureObject={textures.characters}
+            information={elements.characters}
+            source={BestiaryImage}
+            onClick={(id) => {
+              toggleValueInsideLocalStorage(ETabs.CHARACTERS, id);
+              handleScrollToTop();
+            }}
+          />
+        )}
+
+        {tip && (
+          <Alert
+            variant="filled"
+            severity="info"
+            style={{
+              position: "fixed",
+              bottom: "65px",
+              left: "0",
+              right: "0",
+              cursor: "pointer",
+            }}
+            onClick={() => setTip(null)}
+          >
+            {tip}
+          </Alert>
+        )}
+
+        <Footer
+          bossesClick={() => {
+            if (showTab === ETabs.BOSSES) {
+              handleScrollToTop();
+              return;
+            }
+            setShowTab(ETabs.BOSSES);
+          }}
+          charactersClick={() => {
+            if (showTab === ETabs.CHARACTERS) {
+              handleScrollToTop();
+              return;
+            }
+            setShowTab(ETabs.CHARACTERS);
+          }}
+          enemiesClick={() => {
+            if (showTab === ETabs.ENEMIES) {
+              handleScrollToTop();
+              return;
+            }
+            setShowTab(ETabs.ENEMIES);
+          }}
+          active={showTab}
+        />
+      </div>
+    </>
   );
 };
 
