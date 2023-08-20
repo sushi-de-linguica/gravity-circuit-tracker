@@ -1,40 +1,58 @@
-import { Button, ButtonGroup } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { ETabs } from "../../pages/tracker-manager";
+import { useState } from "react";
 
-const Footer = ({ enemiesClick, bossesClick, charactersClick, active }) => {
+const Footer = ({
+  enemiesClick,
+  bossesClick,
+  charactersClick,
+  bossesLabel,
+  charactersLabel,
+  enemiesLabel,
+}) => {
+  const [value, setValue] = useState(ETabs.ENEMIES);
+
   return (
-    <ButtonGroup
-      variant="contained"
+    <BottomNavigation
+      showLabels
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
       style={{
         position: "fixed",
-        height: "40px",
         bottom: "0",
         left: "0",
         right: "0",
         width: "100%",
+        boxShadow: "0px 2px 19px #888",
       }}
     >
-      <Button
-        fullWidth
+      <BottomNavigationAction
+        label={enemiesLabel}
+        value={ETabs.ENEMIES}
+        style={{
+          fontWeight: "bold",
+        }}
         onClick={enemiesClick}
-        color={active === "ENEMIES" ? "secondary" : "primary"}
-      >
-        Enemies
-      </Button>
-      <Button
-        fullWidth
+      />
+      <BottomNavigationAction
+        label={bossesLabel}
+        value={ETabs.BOSSES}
+        style={{
+          fontWeight: "bold",
+        }}
         onClick={bossesClick}
-        color={active === "BOSSES" ? "secondary" : "primary"}
-      >
-        Bosses
-      </Button>
-      <Button
-        fullWidth
+      />
+      <BottomNavigationAction
+        label={charactersLabel}
+        value={ETabs.CHARACTERS}
+        style={{
+          fontWeight: "bold",
+        }}
         onClick={charactersClick}
-        color={active === "CHARACTERS" ? "secondary" : "primary"}
-      >
-        Characters
-      </Button>
-    </ButtonGroup>
+      />
+    </BottomNavigation>
   );
 };
 

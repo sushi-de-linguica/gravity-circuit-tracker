@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { database, getNode } from "../services/firebase";
+import { database, getNode, setNode, removeNode } from "../services/firebase";
 import { onValue, ref } from "firebase/database";
 
 const defaultCallbackData = (value: any) => value;
@@ -12,6 +12,11 @@ interface IUseFirebaseProps<T = any> {
 interface IUseFirebaseResponse<T = any> {
   data: T;
   isLoading: boolean;
+  actions: {
+    setNode: (path: string, value: any) => string | undefined | Promise<void>;
+    getNode: (path: string) => string | undefined | Promise<string>;
+    removeNode: (path: string) => void;
+  };
 }
 
 export const useFirebase = (
@@ -53,5 +58,10 @@ export const useFirebase = (
   return {
     data,
     isLoading,
+    actions: {
+      setNode,
+      getNode,
+      removeNode,
+    },
   };
 };

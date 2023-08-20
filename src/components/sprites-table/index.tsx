@@ -1,12 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 import { Sprite } from "../sprite";
+import BestiaryImage from "../../assets/bestiary.png";
 
-const SpritesDebug = ({
+const SpritesTable = ({
   firebaseData,
   textureObject,
   information,
   opacityWhenExist = true,
-  source,
+  source = BestiaryImage,
+  cursor = "default",
   onClick,
   showCardId = true,
 }) => {
@@ -36,14 +38,14 @@ const SpritesDebug = ({
               data && data.scale
                 ? `scale(calc(var(--scale-size) / ${data.scale}))`
                 : "scale(var(--scale-size))",
-            cursor: "pointer",
+            cursor,
             opacity: opacityWhenExist
               ? firebaseData.includes(id)
-                ? "0.1"
-                : "1"
+                ? "var(--inactive-item-opacity)"
+                : "var(--active-item-opacity)"
               : firebaseData.includes(id)
-              ? "1"
-              : "0.1",
+              ? "var(--active-item-opacity)"
+              : "var(--inactive-item-opacity)",
           }}
           showCardId={showCardId}
           onClick={() => onClick(id)}
@@ -53,4 +55,4 @@ const SpritesDebug = ({
   );
 };
 
-export { SpritesDebug };
+export { SpritesTable as SpritesDebug };
