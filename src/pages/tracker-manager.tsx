@@ -168,7 +168,15 @@ const TrackerManagerPage = () => {
                   right: "0",
                   cursor: "pointer",
                 }}
-                onClick={() => setTip(null)}
+                closeText="close"
+                onClick={() => {
+                  try {
+                    navigator.clipboard.writeText(tip);
+                  } catch (error) {
+                    console.log("error at try copy to clipboard");
+                  }
+                }}
+                onClose={() => setTip(null)}
               >
                 {tip}
               </Alert>
