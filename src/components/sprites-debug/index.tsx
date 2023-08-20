@@ -1,37 +1,27 @@
 import { v4 as uuidv4 } from "uuid";
 import { Sprite } from "../sprite";
-import { useEffect, useState } from "react";
 
 const SpritesDebug = ({
+  firebaseData,
   textureObject,
   information,
+  opacityWhenExist = true,
   source,
   onClick,
-  objectName,
+  showCardId = true,
 }) => {
-  const [finisheds, setFinisheds] = useState([]);
-
-  const handleStorageUpdate = () => {
-    console.log("updated local storage");
-    const obj = localStorage.getItem(objectName);
-    if (!obj) {
-      localStorage.setItem(objectName, JSON.stringify([]));
-      return;
+  const getTitleById = (id: any) => {
+    if (!information || id == null || id == undefined) {
+      return "";
     }
 
-    const json = JSON.parse(obj);
-    setFinisheds(json);
+    const object = information.find((info) => info.id == id);
+    if (!object) {
+      return "";
+    }
+
+    return object.locationText;
   };
-
-  useEffect(() => {
-    handleStorageUpdate();
-
-    window.addEventListener("UPDATE_LOCAL_STORAGE", handleStorageUpdate);
-
-    return () => {
-      window.removeEventListener("UPDATE_LOCAL_STORAGE", handleStorageUpdate);
-    };
-  }, []);
   return (
     <>
       {Object.entries(textureObject).map(([id, data]: any) => (
@@ -39,7 +29,7 @@ const SpritesDebug = ({
           texture={data}
           source={source}
           key={uuidv4()}
-          title={information[id] && information[id].locationText}
+          title={getTitleById(id)}
           id={id}
           style={{
             transform:
@@ -47,9 +37,15 @@ const SpritesDebug = ({
                 ? `scale(calc(var(--scale-size) / ${data.scale}))`
                 : "scale(var(--scale-size))",
             cursor: "pointer",
-            opacity: finisheds.includes(id) ? "0.1" : "1",
+            opacity: opacityWhenExist
+              ? firebaseData.includes(id)
+                ? "0.1"
+                : "1"
+              : firebaseData.includes(id)
+              ? "1"
+              : "0.1",
           }}
-          showCardId
+          showCardId={showCardId}
           onClick={() => onClick(id)}
         />
       ))}
