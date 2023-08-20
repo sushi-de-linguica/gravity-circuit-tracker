@@ -3,8 +3,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--text-color);
+  background-color: transparent;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,9 +14,12 @@
 
   --column-size: 100px;
   --grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  --grid-template-rows: repeat(25, 125px);
+  --grid-auto-rows: 125px;
   --card-margin-bottom: 15px;
   --scale-size: 2;
+  --inactive-item-opacity: 0.25;
+  --active-item-opacity: 1;
+  --text-color: #000000;
 }
 
 * {

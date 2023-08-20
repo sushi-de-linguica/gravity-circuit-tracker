@@ -46,6 +46,7 @@ const Sprite = ({
             right: "0",
             fontSize: "8px",
             textAlign: "center",
+            color: "white",
           }}
         >
           {id}

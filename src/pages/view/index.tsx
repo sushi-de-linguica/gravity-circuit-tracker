@@ -1,26 +1,22 @@
 import { useParams } from "react-router-dom";
-import "../config";
-import { useFirebase } from "../hooks/use-firebase";
-import { DefaultData, ETabs } from "./tracker-manager";
-import { SpritesDebug } from "../components/sprites-debug";
-import { elements, textures } from "../options";
-import BestiaryImage from "../assets/bestiary.png";
 
-import styled from "@emotion/styled";
+import "../../config/firebase";
+import { useFirebase } from "../../hooks/use-firebase";
+import { DefaultData, ETabs } from "../tracker-manager";
+import { SpritesDebug } from "../../components/sprites-table";
+import { elements, textures } from "../../options";
+import {
+  ViewContainer,
+  containerStyle,
+  insideContainerStyle,
+  titleStyle,
+} from "./styles";
 
-const ViewContainer = styled.div`
-  --column-size: 100px;
-  --grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  --grid-template-rows: repeat(25, 125px);
-  --card-margin-bottom: 15px;
-  --scale-size: 1;
-`;
-
-const TrackerViewPage = () => {
+const ViewPage = () => {
   const { userId } = useParams();
 
   if (!userId) {
-    return <>Sem usuário...</>;
+    return <>Invalid user...</>;
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -28,18 +24,6 @@ const TrackerViewPage = () => {
     url: userId!,
     defaultData: DefaultData,
   });
-
-  const insideContainerStyle = {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
-  const containerStyle = { display: "flex", flexDirection: "column" };
-
-  const titleStyle = { fontSize: "18px" };
 
   return (
     <ViewContainer>
@@ -59,7 +43,6 @@ const TrackerViewPage = () => {
                 }
                 textureObject={textures.enemies}
                 information={elements.enemies}
-                source={BestiaryImage}
                 showCardId={false}
                 opacityWhenExist={false}
                 onClick={() => {}}
@@ -80,7 +63,6 @@ const TrackerViewPage = () => {
                 }
                 textureObject={textures.bosses}
                 information={elements.bosses}
-                source={BestiaryImage}
                 showCardId={false}
                 opacityWhenExist={false}
                 onClick={() => {}}
@@ -103,7 +85,6 @@ const TrackerViewPage = () => {
                 }
                 textureObject={textures.characters}
                 information={elements.characters}
-                source={BestiaryImage}
                 showCardId={false}
                 opacityWhenExist={false}
                 onClick={() => {}}
@@ -116,4 +97,4 @@ const TrackerViewPage = () => {
   );
 };
 
-export { TrackerViewPage };
+export { ViewPage as TrackerViewPage };

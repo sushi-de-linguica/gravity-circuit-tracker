@@ -1,14 +1,12 @@
-import { SpritesDebug } from "../components/sprites-debug";
-import BestiaryImage from "../assets/bestiary.png";
+import { SpritesDebug } from "../components/sprites-table";
 import { elements, textures } from "../options";
 import { Footer } from "../components/footer";
 import { useEffect, useState } from "react";
 import { Alert, Button } from "@mui/material";
 
-import "../config";
+import "../config/firebase";
 import { useFirebase } from "../hooks/use-firebase";
 import { useParams } from "react-router-dom";
-import { setNode } from "../services/firebase";
 
 export enum ETabs {
   BOSSES = "BOSSES",
@@ -27,7 +25,11 @@ const TrackerManagerPage = () => {
   const [showTab, setShowTab] = useState(ETabs.ENEMIES);
   const [tip, setTip] = useState(null);
 
-  const { data, isLoading } = useFirebase({
+  const {
+    data,
+    isLoading,
+    actions: { setNode },
+  } = useFirebase({
     url: userId!,
     defaultData: DefaultData,
   });
@@ -106,7 +108,8 @@ const TrackerManagerPage = () => {
             style={{
               display: "grid",
               gridTemplateColumns: "var(--grid-template-columns)",
-              gridTemplateRows: "var(--grid-template-rows)",
+              gridAutoRows: "var(--grid-auto-rows)",
+              marginBottom: "var(--grid-auto-rows)",
               gridAutoFlow: "dense",
               justifyContent: "center",
               alignItems: "center",
@@ -117,9 +120,9 @@ const TrackerManagerPage = () => {
                 firebaseData={
                   data && data[ETabs.ENEMIES] ? data[ETabs.ENEMIES] : []
                 }
+                cursor="pointer"
                 textureObject={textures.enemies}
                 information={elements.enemies}
-                source={BestiaryImage}
                 onClick={(id) => {
                   toggleFirebaseValueByKey(ETabs.ENEMIES, id);
                 }}
@@ -131,9 +134,9 @@ const TrackerManagerPage = () => {
                 firebaseData={
                   data && data[ETabs.BOSSES] ? data[ETabs.BOSSES] : []
                 }
+                cursor="pointer"
                 textureObject={textures.bosses}
                 information={elements.bosses}
-                source={BestiaryImage}
                 onClick={(id) => {
                   toggleFirebaseValueByKey(ETabs.BOSSES, id);
                 }}
@@ -145,9 +148,9 @@ const TrackerManagerPage = () => {
                 firebaseData={
                   data && data[ETabs.CHARACTERS] ? data[ETabs.CHARACTERS] : []
                 }
+                cursor="pointer"
                 textureObject={textures.characters}
                 information={elements.characters}
-                source={BestiaryImage}
                 onClick={(id) => {
                   toggleFirebaseValueByKey(ETabs.CHARACTERS, id);
                 }}
@@ -179,6 +182,14 @@ const TrackerManagerPage = () => {
                 }
                 setShowTab(ETabs.BOSSES);
               }}
+              bossesLabel={
+                <>
+                  Bosses
+                  <br />[
+                  {data && data[ETabs.BOSSES] ? data[ETabs.BOSSES].length : 0}/
+                  {Object.keys(elements.bosses).length}]
+                </>
+              }
               charactersClick={() => {
                 if (showTab === ETabs.CHARACTERS) {
                   handleScrollToTop();
@@ -186,6 +197,16 @@ const TrackerManagerPage = () => {
                 }
                 setShowTab(ETabs.CHARACTERS);
               }}
+              charactersLabel={
+                <>
+                  Characters
+                  <br />[
+                  {data && data[ETabs.CHARACTERS]
+                    ? data[ETabs.CHARACTERS].length
+                    : 0}
+                  /{Object.keys(elements.characters).length}]
+                </>
+              }
               enemiesClick={() => {
                 if (showTab === ETabs.ENEMIES) {
                   handleScrollToTop();
@@ -193,7 +214,14 @@ const TrackerManagerPage = () => {
                 }
                 setShowTab(ETabs.ENEMIES);
               }}
-              active={showTab}
+              enemiesLabel={
+                <>
+                  Enemies
+                  <br />[
+                  {data && data[ETabs.ENEMIES] ? data[ETabs.ENEMIES].length : 0}
+                  /{Object.keys(elements.enemies).length}]
+                </>
+              }
             />
           </div>
         </>
