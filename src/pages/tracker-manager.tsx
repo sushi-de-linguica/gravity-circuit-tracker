@@ -7,6 +7,7 @@ import { Alert, Button } from "@mui/material";
 import "../config/firebase";
 import { useFirebase } from "../hooks/use-firebase";
 import { useParams } from "react-router-dom";
+import { useLocalStorage } from "../hooks/use-local-storage";
 
 export enum ETabs {
   BOSSES = "BOSSES",
@@ -33,6 +34,15 @@ const TrackerManagerPage = () => {
     url: userId!,
     defaultData: DefaultData,
   });
+
+  // const {
+  //   data,
+  //   isLoading,
+  //   actions: { setNode },
+  // } = useLocalStorage({
+  //   url: userId!,
+  //   defaultData: DefaultData,
+  // });
 
   useEffect(() => {
     document.addEventListener("contextmenu", (event) => {
